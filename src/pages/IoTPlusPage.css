@@ -1,0 +1,30 @@
+.iotplus-page {
+  background: linear-gradient(135deg, #1a1a2e 0%, #0d3d3d 100%);
+}
+
+.iotplus-page .page-title {
+  background: linear-gradient(135deg, #00D9A3 0%, #00FFC2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.iotplus-page .project-card {
+  background: linear-gradient(135deg, rgba(0, 217, 163, 0.1) 0%, rgba(0, 255, 194, 0.05) 100%);
+  border: 1px solid rgba(0, 217, 163, 0.3);
+}
+
+.iotplus-page .project-card:hover {
+  border-color: rgba(0, 217, 163, 0.6);
+}
+
+.iotplus-page .tech-tag {
+  background: rgba(0, 217, 163, 0.2);
+  color: #00FFC2;
+  border: 1px solid rgba(0, 217, 163, 0.4);
+}
+
+.iotplus-page .back-button:hover {
+  background: rgba(0, 217, 163, 0.2);
+  border-color: #00D9A3;
+}

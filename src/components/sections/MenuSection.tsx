@@ -1,6 +1,8 @@
 import { Canvas } from '@react-three/fiber';
-import { Suspense } from 'react';
+import { Suspense, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import BoxCard from '../3d/BoxCard';
+import { supabase, Company } from '../../lib/supabase';
 import './MenuSection.css';
 
 interface MenuSectionProps {
@@ -8,6 +10,41 @@ interface MenuSectionProps {
 }
 
 const MenuSection = ({ canvasReady = false }: MenuSectionProps) => {
+  const navigate = useNavigate();
+  const [companies, setCompanies] = useState<Company[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('companies')
+          .select('*')
+          .order('order', { ascending: true });
+
+        if (error) throw error;
+        setCompanies(data || []);
+      } catch (err) {
+        console.error('Error fetching companies:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (canvasReady) {
+      fetchCompanies();
+    }
+  }, [canvasReady]);
+
+  const getCardPosition = (index: number, total: number): [number, number, number] => {
+    if (total === 1) return [0, 0, 0];
+    if (total === 2) return index === 0 ? [-2.5, 0, 0] : [2.5, 0, 0];
+    if (total === 3) return index === 0 ? [-4.5, 0, 0] : index === 1 ? [0, 0, 0] : [4.5, 0, 0];
+    const spacing = 4.5;
+    const startX = -(total - 1) * spacing / 2;
+    return [startX + index * spacing, 0, 0];
+  };
+
   return (
     <div className="menu-section">
       <div className="menu-content">
@@ -30,42 +67,25 @@ const MenuSection = ({ canvasReady = false }: MenuSectionProps) => {
             >
             <Suspense fallback={null}>
               <color attach="background" args={['#16213e']} />
-              
+
               {/* 조명 */}
               <ambientLight intensity={2} />
               <directionalLight position={[5, 5, 5]} intensity={2} />
               <directionalLight position={[-5, 5, 5]} intensity={1.5} />
               <pointLight position={[0, 5, 0]} intensity={2} color="#ffffff" />
-              
-              {/* 왼쪽: 스마트 인재 개발원 */}
-              <BoxCard
-                position={[-4.5, 0, 0]}
-                title="스마트 인재 개발원"
-                subtitle="Team Leader & Full-Stack"
-                description="Artistry, InvestGenius"
-                color="#8B7FFF"
-                link="/smart-talent"
-              />
 
-              {/* 중앙: 인공지능 사관학교 */}
-              <BoxCard
-                position={[0, 0, 0]}
-                title="인공지능 사관학교"
-                subtitle="AI & ML Projects"
-                description="Linguagen"
-                color="#FF6B9D"
-                link="/ai-academy"
-              />
-
-              {/* 오른쪽: 아이오티플러스 */}
-              <BoxCard
-                position={[4.5, 0, 0]}
-                title="아이오티플러스"
-                subtitle="Backend Developer"
-                description="CODEEP, SOLYNX, PMS, FEMS, HDMS"
-                color="#00D9A3"
-                link="/iotplus"
-              />
+              {!loading && companies.length > 0 && companies.map((company, index) => (
+                <BoxCard
+                  key={company.id}
+                  position={getCardPosition(index, companies.length)}
+                  title={company.name}
+                  subtitle={company.role}
+                  description={company.name_en}
+                  color={company.color}
+                  link={`/company/${company.slug}`}
+                  onClick={() => navigate(`/company/${company.slug}`)}
+                />
+              ))}
             </Suspense>
           </Canvas>
           ) : (

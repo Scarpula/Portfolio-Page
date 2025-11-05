@@ -10,9 +10,10 @@ interface BoxCardProps {
   description: string;
   color: string;
   link: string;
+  onClick?: () => void;
 }
 
-const BoxCard = ({ position, title, subtitle, description, color }: BoxCardProps) => {
+const BoxCard = ({ position, title, subtitle, description, color, onClick }: BoxCardProps) => {
   const groupRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
@@ -51,6 +52,7 @@ const BoxCard = ({ position, title, subtitle, description, color }: BoxCardProps
         onClick={() => {
           setClicked(true);
           setTimeout(() => setClicked(false), 500);
+          if (onClick) onClick();
         }}
         castShadow
       >

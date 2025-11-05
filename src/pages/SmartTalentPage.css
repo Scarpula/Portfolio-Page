@@ -1,0 +1,30 @@
+.smart-talent-page {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 100%);
+}
+
+.smart-talent-page .page-title {
+  background: linear-gradient(135deg, #8B7FFF 0%, #B8A9FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.smart-talent-page .project-card {
+  background: linear-gradient(135deg, rgba(139, 127, 255, 0.1) 0%, rgba(184, 169, 255, 0.05) 100%);
+  border: 1px solid rgba(139, 127, 255, 0.3);
+}
+
+.smart-talent-page .project-card:hover {
+  border-color: rgba(139, 127, 255, 0.6);
+}
+
+.smart-talent-page .tech-tag {
+  background: rgba(139, 127, 255, 0.2);
+  color: #B8A9FF;
+  border: 1px solid rgba(139, 127, 255, 0.4);
+}
+
+.smart-talent-page .back-button:hover {
+  background: rgba(139, 127, 255, 0.2);
+  border-color: #8B7FFF;
+}

@@ -1,0 +1,30 @@
+.ai-academy-page {
+  background: linear-gradient(135deg, #1a1a2e 0%, #4a1942 100%);
+}
+
+.ai-academy-page .page-title {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFA5C0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ai-academy-page .project-card {
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.1) 0%, rgba(255, 165, 192, 0.05) 100%);
+  border: 1px solid rgba(255, 107, 157, 0.3);
+}
+
+.ai-academy-page .project-card:hover {
+  border-color: rgba(255, 107, 157, 0.6);
+}
+
+.ai-academy-page .tech-tag {
+  background: rgba(255, 107, 157, 0.2);
+  color: #FFA5C0;
+  border: 1px solid rgba(255, 107, 157, 0.4);
+}
+
+.ai-academy-page .back-button:hover {
+  background: rgba(255, 107, 157, 0.2);
+  border-color: #FF6B9D;
+}
