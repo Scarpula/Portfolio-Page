@@ -18,6 +18,10 @@ const BoxCard = ({ position, title, subtitle, description, color, onClick }: Box
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
 
+  // 모바일 환경 감지
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const cardScale = isMobile ? 0.85 : 1; // 모바일에서 카드 크기 축소
+
   // 애니메이션: 부드러운 회전과 호버 효과
   useFrame((state) => {
     if (groupRef.current) {
@@ -41,10 +45,10 @@ const BoxCard = ({ position, title, subtitle, description, color, onClick }: Box
   });
 
   return (
-    <group position={position}>
+    <group position={position} scale={cardScale}>
       <group ref={groupRef}>
       <RoundedBox
-        args={[2.5, 3.5, 0.5]}
+        args={[3.2, 4.2, 0.6]}
         radius={0.1}
         smoothness={4}
         onPointerOver={() => setHovered(true)}
@@ -65,10 +69,10 @@ const BoxCard = ({ position, title, subtitle, description, color, onClick }: Box
         />
       </RoundedBox>
 
-      {/* 타이틀 텍스트 */}
+      {/* 앞면 텍스트 */}
       <Text
-        position={[0, 1.2, 0.3]}
-        fontSize={0.25}
+        position={[0, 1.5, 0.35]}
+        fontSize={0.32}
         color="white"
         anchorX="center"
         anchorY="middle"
@@ -76,38 +80,35 @@ const BoxCard = ({ position, title, subtitle, description, color, onClick }: Box
         {title}
       </Text>
 
-      {/* 서브타이틀 */}
       <Text
-        position={[0, 0.6, 0.3]}
-        fontSize={0.18}
+        position={[0, 0.7, 0.35]}
+        fontSize={0.22}
         color="rgba(255, 255, 255, 0.9)"
         anchorX="center"
         anchorY="middle"
-        maxWidth={2}
+        maxWidth={2.8}
         textAlign="center"
       >
         {subtitle}
       </Text>
 
-      {/* 설명 텍스트 */}
       <Text
-        position={[0, -0.2, 0.3]}
-        fontSize={0.12}
+        position={[0, -0.3, 0.35]}
+        fontSize={0.15}
         color="rgba(255, 255, 255, 0.7)"
         anchorX="center"
         anchorY="middle"
-        maxWidth={2}
+        maxWidth={2.8}
         textAlign="center"
         lineHeight={1.4}
       >
         {description}
       </Text>
 
-      {/* 클릭 유도 텍스트 */}
       {hovered && (
         <Text
-          position={[0, -1.2, 0.3]}
-          fontSize={0.15}
+          position={[0, -1.5, 0.35]}
+          fontSize={0.18}
           color="#FFD700"
           anchorX="center"
           anchorY="middle"
@@ -116,10 +117,62 @@ const BoxCard = ({ position, title, subtitle, description, color, onClick }: Box
         </Text>
       )}
 
+      {/* 뒷면 텍스트 (rotation.y = Math.PI로 뒤집혀 보임) */}
+      <Text
+        position={[0, 1.5, -0.35]}
+        fontSize={0.32}
+        color="white"
+        anchorX="center"
+        anchorY="middle"
+        rotation={[0, Math.PI, 0]}
+      >
+        {title}
+      </Text>
+
+      <Text
+        position={[0, 0.7, -0.35]}
+        fontSize={0.22}
+        color="rgba(255, 255, 255, 0.9)"
+        anchorX="center"
+        anchorY="middle"
+        maxWidth={2.8}
+        textAlign="center"
+        rotation={[0, Math.PI, 0]}
+      >
+        {subtitle}
+      </Text>
+
+      <Text
+        position={[0, -0.3, -0.35]}
+        fontSize={0.15}
+        color="rgba(255, 255, 255, 0.7)"
+        anchorX="center"
+        anchorY="middle"
+        maxWidth={2.8}
+        textAlign="center"
+        lineHeight={1.4}
+        rotation={[0, Math.PI, 0]}
+      >
+        {description}
+      </Text>
+
+      {hovered && (
+        <Text
+          position={[0, -1.5, -0.35]}
+          fontSize={0.18}
+          color="#FFD700"
+          anchorX="center"
+          anchorY="middle"
+          rotation={[0, Math.PI, 0]}
+        >
+          클릭하여 자세히 보기 →
+        </Text>
+      )}
+
       {/* 테두리 효과 */}
       {hovered && (
         <RoundedBox
-          args={[2.6, 3.6, 0.51]}
+          args={[3.3, 4.3, 0.65]}
           radius={0.1}
           smoothness={4}
         >

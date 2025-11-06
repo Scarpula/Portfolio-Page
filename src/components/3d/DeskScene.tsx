@@ -145,14 +145,14 @@ const DeskScene = ({ onLightToggle }: DeskSceneProps) => {
         onClick={handleLampClick}
       />
 
-        {/* 바닥 (그림자 받기) */}
+        {/* 바닥 (그림자 받기) - GLB 모델의 그림자만 표시 */}
         <mesh
           rotation={[-Math.PI / 2, 0, 0]}
           position={[0, -0.01, 0]}
           receiveShadow
         >
           <planeGeometry args={[20, 20]} />
-          <shadowMaterial opacity={lightOn ? 0.2 : 0.4} />
+          <shadowMaterial opacity={0.3} transparent />
         </mesh>
       </group>
     </>

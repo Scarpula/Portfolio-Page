@@ -37,10 +37,14 @@ const MenuSection = ({ canvasReady = false }: MenuSectionProps) => {
   }, [canvasReady]);
 
   const getCardPosition = (index: number, total: number): [number, number, number] => {
+    // 모바일 환경 감지
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const spacing = isMobile ? 4 : 5.5; // 카드 크기에 맞춰 간격 증가
+
     if (total === 1) return [0, 0, 0];
-    if (total === 2) return index === 0 ? [-2.5, 0, 0] : [2.5, 0, 0];
-    if (total === 3) return index === 0 ? [-4.5, 0, 0] : index === 1 ? [0, 0, 0] : [4.5, 0, 0];
-    const spacing = 4.5;
+    if (total === 2) return index === 0 ? [-spacing * 0.6, 0, 0] : [spacing * 0.6, 0, 0];
+    if (total === 3) return index === 0 ? [-spacing, 0, 0] : index === 1 ? [0, 0, 0] : [spacing, 0, 0];
+
     const startX = -(total - 1) * spacing / 2;
     return [startX + index * spacing, 0, 0];
   };
@@ -54,9 +58,13 @@ const MenuSection = ({ canvasReady = false }: MenuSectionProps) => {
         <div className="canvas-container">
           {canvasReady ? (
             <Canvas
-              camera={{ position: [0, 0, 8], fov: 60 }}
+              camera={{
+                position: [0, 0, typeof window !== 'undefined' && window.innerWidth < 768 ? 10 : 8],
+                fov: typeof window !== 'undefined' && window.innerWidth < 768 ? 70 : 60
+              }}
               gl={{ preserveDrawingBuffer: true }}
-              dpr={[1, 2]}
+              dpr={typeof window !== 'undefined' && window.innerWidth < 768 ? [1, 1.5] : [1, 2]}
+              performance={{ min: 0.5 }}
               style={{
                 position: 'absolute',
                 top: 0,
@@ -79,7 +87,7 @@ const MenuSection = ({ canvasReady = false }: MenuSectionProps) => {
                   key={company.id}
                   position={getCardPosition(index, companies.length)}
                   title={company.name}
-                  subtitle={company.role}
+                  subtitle={company.role}               
                   description={company.name_en}
                   color={company.color}
                   link={`/company/${company.slug}`}
@@ -89,16 +97,18 @@ const MenuSection = ({ canvasReady = false }: MenuSectionProps) => {
             </Suspense>
           </Canvas>
           ) : (
-            <div style={{
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'rgba(255, 255, 255, 0.3)',
-              fontSize: '1rem'
-            }}>
-              Scroll to load 3D Scene...
+            <div className="canvas-loading">
+              <div className="canvas-spinner">
+                <div className="cube-spinner">
+                  <div className="cube-face cube-front"></div>
+                  <div className="cube-face cube-back"></div>
+                  <div className="cube-face cube-left"></div>
+                  <div className="cube-face cube-right"></div>
+                  <div className="cube-face cube-top"></div>
+                  <div className="cube-face cube-bottom"></div>
+                </div>
+              </div>
+              <p className="canvas-loading-text">Scroll to load 3D Scene...</p>
             </div>
           )}
         </div>

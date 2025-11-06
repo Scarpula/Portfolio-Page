@@ -26,8 +26,8 @@ React와 Three.js를 활용한 3D 인터랙티브 포트폴리오 웹사이트�
 - **Framer Motion** - 애니메이션
 - **react-fullpage** - 풀페이지 스크롤
 
-### Backend (예정)
-- **Supabase** - 백엔드 서비스 (DB, Auth, Storage)
+### Backend
+- **Supabase** - 백엔드 서비스 (PostgreSQL DB, Row Level Security)
 
 ## 📁 프로젝트 구조
 
@@ -60,27 +60,50 @@ Portfolio Page/
 
 ## 🚀 시작하기
 
-### 설치
+### 1. 저장소 클론
+
+```bash
+git clone https://github.com/YOUR_USERNAME/portfolio-page.git
+cd portfolio-page
+```
+
+### 2. 패키지 설치
 
 ```bash
 npm install --legacy-peer-deps
 ```
 
-### 개발 서버 실행
+### 3. 환경 변수 설정
+
+루트 디렉토리에 `.env` 파일을 생성하고 다음 내용을 추가하세요:
+
+```env
+VITE_SUPABASE_URL=https://your-project-id.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key-here
+```
+
+**Supabase 키 찾는 방법:**
+1. [Supabase Dashboard](https://supabase.com/dashboard) 접속
+2. 프로젝트 선택
+3. Settings → API → Project URL과 anon public 키 복사
+
+자세한 설정 방법은 [SUPABASE_SETUP.md](./SUPABASE_SETUP.md)를 참조하세요.
+
+### 4. 개발 서버 실행
 
 ```bash
 npm run dev
 ```
 
-서버가 시작되면 [http://localhost:3000](http://localhost:3000)에서 확인할 수 있습니다.
+서버가 시작되면 [http://localhost:5173](http://localhost:5173)에서 확인할 수 있습니다.
 
-### 빌드
+### 5. 빌드
 
 ```bash
 npm run build
 ```
 
-### 프리뷰
+### 6. 프리뷰
 
 ```bash
 npm run preview
@@ -121,15 +144,45 @@ npm run preview
 3. **줌 조절**: 마우스 스크롤로 카메라를 줌 인/아웃할 수 있습니다
 4. **페이지 이동**: 스크롤을 내려 다음 섹션으로 이동합니다
 
+## 🌐 배포하기
+
+### Vercel 배포 (권장)
+
+이 프로젝트는 Vercel에 배포하는 것이 가장 간단합니다.
+
+**빠른 배포:**
+
+1. GitHub에 코드 푸시
+2. [Vercel](https://vercel.com)에 로그인 (GitHub 계정 연동)
+3. "New Project" → GitHub 저장소 선택
+4. 환경 변수 추가:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+5. "Deploy" 클릭!
+
+**상세한 배포 가이드:**
+[VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md)를 참조하세요.
+
+**배포 후 자동 업데이트:**
+- `main` 브랜치에 푸시하면 자동으로 프로덕션 배포
+- 다른 브랜치는 자동으로 미리보기 생성
+
+### 다른 플랫폼
+
+- **Netlify**: `vercel.json`의 내용을 `netlify.toml`로 변환
+- **GitHub Pages**: SPA 라우팅을 위한 추가 설정 필요
+- **자체 호스팅**: Nginx/Apache 설정 필요
+
 ## 📝 TODO
 
-- [ ] Section 3, 4 상세 페이지 구현
-- [ ] Supabase 연동
-- [ ] 프로젝트 상세 정보 추가
-- [ ] 경력 상세 정보 추가
-- [ ] 반응형 개선
+- [x] Supabase 연동
+- [x] 경력 및 프로젝트 상세 페이지 구현
+- [x] 3D 카드 메뉴 구현
+- [x] 풀페이지 스크롤 구현
+- [x] 반응형 디자인
 - [ ] SEO 최적화
-- [ ] 성능 최적화
+- [ ] 성능 최적화 (이미지 lazy loading)
+- [ ] 블로그 섹션 추가 (선택)
 
 ## 📧 문의
 

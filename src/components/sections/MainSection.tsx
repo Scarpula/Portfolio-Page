@@ -19,9 +19,14 @@ const MainSection = () => {
       {/* Three.js 3D 책상 씬 */}
       <div className="threejs-background">
         <Canvas
-          camera={{ position: [4, 3, 4], fov: 50 }}
+          camera={{
+            position: [4, 3, 4],
+            fov: typeof window !== 'undefined' && window.innerWidth < 768 ? 60 : 50
+          }}
           shadows
           style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+          dpr={typeof window !== 'undefined' && window.innerWidth < 768 ? [1, 1.5] : [1, 2]}
+          performance={{ min: 0.5 }}
         >
           <DeskScene onLightToggle={setLightOn} />
         </Canvas>
