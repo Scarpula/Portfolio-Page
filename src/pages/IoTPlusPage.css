@@ -28,3 +28,11 @@
   background: rgba(0, 217, 163, 0.2);
   border-color: #00D9A3;
 }
+
+.iotplus-page .project-card-full::-webkit-scrollbar-thumb {
+  background: rgba(0, 217, 163, 0.3);
+}
+
+.iotplus-page .project-card-full::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 217, 163, 0.5);
+}

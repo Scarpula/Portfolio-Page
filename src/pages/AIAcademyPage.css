@@ -28,3 +28,11 @@
   background: rgba(255, 107, 157, 0.2);
   border-color: #FF6B9D;
 }
+
+.ai-academy-page .project-card-full::-webkit-scrollbar-thumb {
+  background: rgba(255, 107, 157, 0.3);
+}
+
+.ai-academy-page .project-card-full::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 107, 157, 0.5);
+}

@@ -28,3 +28,11 @@
   background: rgba(139, 127, 255, 0.2);
   border-color: #8B7FFF;
 }
+
+.smart-talent-page .project-card-full::-webkit-scrollbar-thumb {
+  background: rgba(139, 127, 255, 0.3);
+}
+
+.smart-talent-page .project-card-full::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 127, 255, 0.5);
+}

@@ -61,6 +61,12 @@
 .main-section[data-light="off"] .content-wrapper {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.2);
+  width: 400px;
+  height: 250px;
+  position: absolute;
+  top: 22%;
+  left: 14%;
+  transform: translate(-50%, -50%);
 }
 
 /* Three.js 배경 레이어 */
