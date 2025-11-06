@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!glb_asset).*)",
       "destination": "/index.html"
     }
   ],
