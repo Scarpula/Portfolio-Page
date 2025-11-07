@@ -5,6 +5,9 @@ import * as THREE from 'three';
 import { MechanicalTable } from './objects/MechanicalTable';
 import { MacbookLaptop } from './objects/MacbookLaptop';
 import { TableLamp } from './objects/TableLamp';
+import { ComputerMouse } from './objects/ComputerMouse';
+import { MacbookScreen } from './objects/MacbookScreen';
+import { useSnakeGameTexture } from './games/SnakeGameTexture';
 
 interface DeskSceneProps {
   onLightToggle?: (isOn: boolean) => void;
@@ -14,9 +17,16 @@ const DeskScene = ({ onLightToggle }: DeskSceneProps) => {
   const [lightOn, setLightOn] = useState(true);
   const [zoomedIn, setZoomedIn] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [gameActive, setGameActive] = useState(false);
   const groupRef = useRef<THREE.Group>(null);
   const controlsRef = useRef<any>(null);
   const macbookRef = useRef<THREE.Group>(null);
+
+  // 게임 텍스처 생성
+  const { texture: gameTexture } = useSnakeGameTexture({
+    isActive: gameActive,
+    onScoreChange: (score) => console.log('Score:', score)
+  });
 
   // 부드러운 회전 애니메이션
   useFrame((state) => {
@@ -68,13 +78,23 @@ const DeskScene = ({ onLightToggle }: DeskSceneProps) => {
 
   const handleMacbookClick = () => {
     if (zoomedIn) {
-      // 줌아웃: 초기 위치로 돌아가는 애니메이션 시작
+      // 줌아웃: 초기 위치로 돌아가는 애니메이션 시작 및 게임 종료
       setZoomedIn(false);
       setIsAnimating(true);
+      setGameActive(false);
     } else {
       // 줌인
       setZoomedIn(true);
       setIsAnimating(false);
+    }
+  };
+
+  const handleMouseClick = (e?: any) => {
+    if (e) e.stopPropagation();
+    // 게임이 꺼져있을 때만 켤 수 있음 (마우스는 게임 시작만 가능)
+    if (!gameActive) {
+      console.log('Mouse clicked! Starting game');
+      setGameActive(true);
     }
   };
 
@@ -136,6 +156,15 @@ const DeskScene = ({ onLightToggle }: DeskSceneProps) => {
           rotation={[0, 0, 0]}
           onClick={handleMacbookClick}
         />
+
+        {/* 맥북 화면 - 게임 표시 */}
+        <MacbookScreen
+          position={[14.7, 1.11, 4.22]}
+          rotation={[-0.23, 0, 0]}
+          scale={[0.68, 0.82, 1]}
+          texture={gameTexture}
+          visible={gameActive}
+        />
       </group>
 
       <TableLamp
@@ -143,6 +172,13 @@ const DeskScene = ({ onLightToggle }: DeskSceneProps) => {
         rotation={[0, Math.PI / 2, 0]}
         isOn={lightOn}
         onClick={handleLampClick}
+      />
+
+      <ComputerMouse
+        position={[0.2, 1.68, 0.5]}
+        rotation={[0, Math.PI / 1.5 + Math.PI, 0]}
+        scale={0.1}
+        onClick={handleMouseClick}
       />
 
         {/* 바닥 (그림자 받기) - GLB 모델의 그림자만 표시 */}
@@ -155,6 +191,7 @@ const DeskScene = ({ onLightToggle }: DeskSceneProps) => {
           <shadowMaterial opacity={0.3} transparent />
         </mesh>
       </group>
+
     </>
   );
 };
